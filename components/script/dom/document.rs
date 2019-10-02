@@ -138,6 +138,7 @@ use num_traits::ToPrimitive;
 use percent_encoding::percent_decode;
 use profile_traits::ipc as profile_ipc;
 use profile_traits::time::{TimerMetadata, TimerMetadataFrameType, TimerMetadataReflowType};
+use ref_filter_map::ref_filter_map;
 use ref_slice::ref_slice;
 use script_layout_interface::message::{Msg, ReflowGoal};
 use script_traits::{AnimationState, DocumentActivity, MouseButton, MouseEventType};
@@ -149,7 +150,7 @@ use servo_atoms::Atom;
 use servo_config::pref;
 use servo_media::{ClientContextId, ServoMedia};
 use servo_url::{ImmutableOrigin, MutableOrigin, ServoUrl};
-use std::borrow::{Cow, ToOwned};
+use std::borrow::Cow;
 use std::cell::{Cell, Ref, RefMut};
 use std::collections::hash_map::Entry::{Occupied, Vacant};
 use std::collections::{HashMap, HashSet, VecDeque};
@@ -2806,14 +2807,10 @@ impl Document {
     }
 
     pub fn get_csp_list(&self) -> Option<Ref<CspList>> {
-        let b = self.csp_list.borrow();
-        if b.is_none() {
-            None
-        } else {
-            Some(Ref::map(b, |o| o.as_ref().unwrap()))
-        }
+        ref_filter_map(self.csp_list.borrow(), Option::as_ref)
     }
 
+    /// https://www.w3.org/TR/CSP/#should-block-request
     pub fn should_request_be_blocked_by_csp(&self, request: &RequestBuilder) -> csp::CheckResult {
         let request = csp::Request {
             url: request.url.clone().into_url(),
