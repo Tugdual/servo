@@ -51,7 +51,7 @@ use canvas_traits::webgl::{GLFormats, GLLimits, WebGLQueryId};
 use canvas_traits::webgl::{WebGLBufferId, WebGLChan, WebGLContextShareMode, WebGLError};
 use canvas_traits::webgl::{WebGLFramebufferId, WebGLMsgSender, WebGLPipeline, WebGLProgramId};
 use canvas_traits::webgl::{WebGLReceiver, WebGLRenderbufferId, WebGLSLVersion, WebGLSender};
-use canvas_traits::webgl::{WebGLShaderId, WebGLTextureId, WebGLVersion, WebGLVertexArrayId};
+use canvas_traits::webgl::{WebGLShaderId, WebGLSyncId, WebGLTextureId, WebGLVersion};
 use content_security_policy::CspList;
 use crossbeam_channel::{Receiver, Sender};
 use cssparser::RGBA;

@@ -21,58 +21,7 @@ pub enum Initiator {
 }
 
 /// A request [destination](https://fetch.spec.whatwg.org/#concept-request-destination)
-#[derive(Clone, Copy, Debug, Deserialize, MallocSizeOf, PartialEq, Serialize)]
-pub enum Destination {
-    None,
-    Audio,
-    Document,
-    Embed,
-    Font,
-    Image,
-    Manifest,
-    Object,
-    Report,
-    Script,
-    ServiceWorker,
-    SharedWorker,
-    Style,
-    Track,
-    Video,
-    Worker,
-    Xslt,
-}
-
-impl Destination {
-    /// https://fetch.spec.whatwg.org/#request-destination-script-like
-    #[inline]
-    pub fn is_script_like(&self) -> bool {
-        *self == Destination::Script ||
-            *self == Destination::ServiceWorker ||
-            *self == Destination::SharedWorker ||
-            *self == Destination::Worker
-    }
-    pub fn to_csp_destination(&self) -> csp::Destination {
-        match *self {
-            Destination::None => csp::Destination::None,
-            Destination::Audio => csp::Destination::Audio,
-            Destination::Document => csp::Destination::Document,
-            Destination::Embed => csp::Destination::Embed,
-            Destination::Font => csp::Destination::Font,
-            Destination::Image => csp::Destination::Image,
-            Destination::Manifest => csp::Destination::Manifest,
-            Destination::Object => csp::Destination::Object,
-            Destination::Report => csp::Destination::Report,
-            Destination::Script => csp::Destination::Script,
-            Destination::ServiceWorker => csp::Destination::ServiceWorker,
-            Destination::SharedWorker => csp::Destination::SharedWorker,
-            Destination::Style => csp::Destination::Style,
-            Destination::Track => csp::Destination::Track,
-            Destination::Video => csp::Destination::Video,
-            Destination::Worker => csp::Destination::Worker,
-            Destination::Xslt => csp::Destination::Xslt,
-        }
-    }
-}
+pub use csp::Destination;
 
 /// A request [origin](https://fetch.spec.whatwg.org/#concept-request-origin)
 #[derive(Clone, Debug, Deserialize, MallocSizeOf, PartialEq, Serialize)]

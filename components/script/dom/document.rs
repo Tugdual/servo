@@ -2816,7 +2816,7 @@ impl Document {
             url: request.url.clone().into_url(),
             origin: request.origin.clone().into_url_origin(),
             redirect_count: 0,
-            destination: request.destination.to_csp_destination(),
+            destination: request.destination,
             initiator: csp::Initiator::Fetch,
             nonce: String::new(),
             integrity_metadata: String::new(),
