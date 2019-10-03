@@ -4,6 +4,7 @@
 
 use crate::ReferrerPolicy;
 use crate::ResourceTimingType;
+use content_security_policy as csp;
 use http::HeaderMap;
 use hyper::Method;
 use msg::constellation_msg::PipelineId;
@@ -20,37 +21,7 @@ pub enum Initiator {
 }
 
 /// A request [destination](https://fetch.spec.whatwg.org/#concept-request-destination)
-#[derive(Clone, Copy, Debug, Deserialize, MallocSizeOf, PartialEq, Serialize)]
-pub enum Destination {
-    None,
-    Audio,
-    Document,
-    Embed,
-    Font,
-    Image,
-    Manifest,
-    Object,
-    Report,
-    Script,
-    ServiceWorker,
-    SharedWorker,
-    Style,
-    Track,
-    Video,
-    Worker,
-    Xslt,
-}
-
-impl Destination {
-    /// https://fetch.spec.whatwg.org/#request-destination-script-like
-    #[inline]
-    pub fn is_script_like(&self) -> bool {
-        *self == Destination::Script ||
-            *self == Destination::ServiceWorker ||
-            *self == Destination::SharedWorker ||
-            *self == Destination::Worker
-    }
-}
+pub use csp::Destination;
 
 /// A request [origin](https://fetch.spec.whatwg.org/#concept-request-origin)
 #[derive(Clone, Debug, Deserialize, MallocSizeOf, PartialEq, Serialize)]
